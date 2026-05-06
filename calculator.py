@@ -3,62 +3,122 @@
 import random 
 import time
 
+history_list = []
+
+# INPUT
 def ask_for_numbers(): 
     numbers = input("Enter numbers separated by spaces: ").split()
-    return numbers
+    return list(map(float,numbers))
 
+# OPERATIONS
 def add(numbers): 
-    results = sum(numbers)
-    return results 
+    result = sum(numbers)
+    history_list.append(f"Add: {numbers} = {result}")
+    return result
 
-def subtract(): 
-    pass
+def subtract(numbers): 
+    result  = numbers[0]
+    for n in numbers[1:]: 
+        result -= n 
+    history_list.append(f"Subtract: {numbers} = {result}")
+    return result 
 
-def multiply(): 
-    pass
+def multiply(numbers): 
+    result = 1
+    for n in numbers: 
+        result *= n 
+    history_list.append(f"Multiply: {numbers} = {result}")
+    return result
 
-def divide(): 
-    pass
+def divide(numbers): 
+    result = numbers[0]
+    for n in numbers[1:]:
+        result /= n 
+    history_list.append(f"Divide: {numbers} = {result}")
+    return result
+    
+def modulo(numbers): 
+    result = numbers[0]
+    for n in numbers[1:]:
+        result %= n 
+    history_list.append(f"Modulo: {numbers} = {result}")
+    return result
 
-def modulo(): 
-    pass
+def exponentiation(numbers): 
+    result = numbers[0]
+    for n in numbers[1:]:
+        result **= n 
+    history_list.append(f"Exponentiation: {numbers} = {result}")
+    return result
 
-def exponentiation(): 
-    pass
+def floor_division(numbers): 
+    result = numbers[0]
+    for n in numbers[1:]: 
+        result //= n 
+    history_list.append(f"Floor Division: {numbers} = {result}")
+    return result
 
-def floor_division(): 
-    pass
+def square_root(numbers): 
+    result = numbers[0]**0.5
+    history_list.append(f"Square Root: {numbers[0]} = {result}")
+    return result
+    
+def percentage(numbers): 
+    result = (numbers[0] / 100) * numbers[1]
+    history_list.append(f"Percentage: {numbers} = {result}")
+    return result
 
-def square_root(): 
-    pass
+def absolute_value(numbers): 
+    result = -numbers[0] if numbers[0] < 0 else numbers[0]
+    history_list.append(f"Absolute Value: {numbers[0]} = {result}")
+    return result
 
-def percentage(): 
-    pass
+def factorial(numbers): 
+    n = int(numbers[0])
+    result = 1
+    for i in range(1,n+1): 
+        result *= i
+    history_list.append(f"Factorial: {n} = {result}")
+    return result
 
-def absolute_value(): 
-    pass
+def logarithm(numbers): 
+    x = numbers[0]
+    result = 0 
+    while x > 1: 
+        x / 10 
+        result += 1 
+    history_list.append(f"Log10 approx: {numbers[0]} = {result}")
+    return result
 
-def factorial(): 
-    pass
-
-def logarithm(): 
-    pass
-
-def trigonometry(): 
-    pass    
+def trigonometry(numbers): 
+    x = numbers[0]
+    result = x - (x**3)/6 + (x**5)/120 
+    history_list.append(f"Trigonometry: {numbers[0]} = {result}")       
 
 def random_number(): 
-    pass
+    result = random.randint(1,100)
+    history_list.append(f"Random Number: {result}")
+    return result
 
-def temperature_conversion(): 
-    pass
+def temperature_conversion(numbers): 
+    c = numbers[0]
+    f = (c*9/5) + 32
+    history_list.append(f"Temperature Conversion: {c}C = {f}F")
+    return f
 
 def history(): 
-    pass
+    print(f"\n --- HISTORY ---")
+    for item in history_list: 
+        print(item)
 
 def remove_calculations_from_history(): 
-    pass
+    history_list.clear()
+    print("History cleared!")
 
+def pause(): 
+    input("\nPress Enter to go back to menu...")
+
+# MAIN PROGRAM
 def main_program(): 
     while True: 
         choice = input("""
@@ -86,48 +146,62 @@ What do you want to do?
 Your choice: """)
         
         if choice == "1": 
-            results = add(ask_for_numbers())
-            print("Result: ", results)
-            time.sleep(3)
+            print("Result: ", add(ask_for_numbers()))
+            pause()
         elif choice == "2":
-            results = subtract(ask_for_numbers())
-            print("Result: ", results)
+            print("Result: ", subtract(ask_for_numbers()))
+            pause()
         elif choice == "3":
-            results = multiply(ask_for_numbers())  
-            print("Result: ", results)  
+            print("Result: ", multiply(ask_for_numbers()))
+            pause()
         elif choice == "4":
-            results = divide(ask_for_numbers())
-            print("Result: ", results)
+            print("Result: ", divide(ask_for_numbers()))
+            pause()
         elif choice == "5":     
-            modulo()
+            print("Result: ", modulo(ask_for_numbers()))
+            pause()
         elif choice == "6":
-            exponentiation()
+            print("Result: ", exponentiation(ask_for_numbers()))
+            pause()
         elif choice == "7":
-            floor_division()
+            print("Result: ", floor_division(ask_for_numbers()))
+            pause()
         elif choice == "8":
-            square_root()
+            print("Result: ", square_root(ask_for_numbers()))
+            pause()
         elif choice == "9":
-            percentage()
+            print("Result: ", percentage(ask_for_numbers()))
+            pause()
         elif choice == "10":
-            absolute_value()
+            print("Result: ", absolute_value(ask_for_numbers()))
+            pause()
         elif choice == "11":
-            factorial()
+            print("Result: ", factorial(ask_for_numbers()))
+            pause()
         elif choice == "12":
-            logarithm()
+            print("Result: ", logarithm(ask_for_numbers()))
+            pause()
         elif choice == "13":
-            trigonometry()
+            print("Result: ", trigonometry(ask_for_numbers()))
+            pause()
         elif choice == "14":
-            random_number()
+            print("Result: ", random_number())
+            pause()
         elif choice == "15":
-            temperature_conversion()
+            print("Result: ", temperature_conversion(ask_for_numbers()))
+            pause()
         elif choice == "16":
             history()
+            pause()
         elif choice == "17":
             remove_calculations_from_history()
+            pause()
         elif choice == "18":
             print("Exiting the calculator. Goodbye!")
+            break
         else:
             print("Invalid choice. Please select a valid option from the menu.")
+            pause()
 
 if __name__ == "__main__":
     main_program()
