@@ -1,14 +1,17 @@
 # MY calculator 
 
 import random 
-import time
 
 history_list = []
 
 # INPUT
 def ask_for_numbers(): 
-    numbers = input("Enter numbers separated by spaces: ").split()
-    return list(map(float,numbers))
+    while True: 
+        try: 
+            numbers = input("Enter numbers separated by spaces: ").split()
+            return list(map(float,numbers))
+        except ValueError: 
+            print("Invalid input. Please enter numbers only.")
 
 # OPERATIONS
 def add(numbers): 
@@ -33,6 +36,9 @@ def multiply(numbers):
 def divide(numbers): 
     result = numbers[0]
     for n in numbers[1:]:
+        if n == 0: 
+            history_list.append(f"Divide ERROR: {numbers} (division by zero)")
+            return "Error: Cannot divide by zero"
         result /= n 
     history_list.append(f"Divide: {numbers} = {result}")
     return result
@@ -40,6 +46,9 @@ def divide(numbers):
 def modulo(numbers): 
     result = numbers[0]
     for n in numbers[1:]:
+        if n == 0:
+            history_list.append(f"Modulo ERROR: {numbers} (division by zero)")
+            return "Error: Cannot divide by zero"
         result %= n 
     history_list.append(f"Modulo: {numbers} = {result}")
     return result
@@ -54,11 +63,15 @@ def exponentiation(numbers):
 def floor_division(numbers): 
     result = numbers[0]
     for n in numbers[1:]: 
+        if n == 0: 
+            return "Cannot divide by zero"
         result //= n 
     history_list.append(f"Floor Division: {numbers} = {result}")
     return result
 
 def square_root(numbers): 
+    if numbers[0] < 0: 
+        return "Cannot take square root of a negative number"
     result = numbers[0]**0.5
     history_list.append(f"Square Root: {numbers[0]} = {result}")
     return result
@@ -75,6 +88,11 @@ def absolute_value(numbers):
 
 def factorial(numbers): 
     n = int(numbers[0])
+    if n < 0: 
+        return "Cannot factorial negative numbers"
+    if n != int(n): 
+        return "Factorial only works with whole numbers"
+    n = int(n)
     result = 1
     for i in range(1,n+1): 
         result *= i
@@ -83,9 +101,11 @@ def factorial(numbers):
 
 def logarithm(numbers): 
     x = numbers[0]
+    if x <= 0:
+        return "Cannot calculate logarithm of non-positive number"
     result = 0 
     while x > 1: 
-        x / 10 
+        x /= 10 
         result += 1 
     history_list.append(f"Log10 approx: {numbers[0]} = {result}")
     return result
@@ -93,7 +113,8 @@ def logarithm(numbers):
 def trigonometry(numbers): 
     x = numbers[0]
     result = x - (x**3)/6 + (x**5)/120 
-    history_list.append(f"Trigonometry: {numbers[0]} = {result}")       
+    history_list.append(f"Trigonometry: {numbers[0]} = {result}")  
+    return result      
 
 def random_number(): 
     result = random.randint(1,100)
@@ -139,12 +160,12 @@ What do you want to do?
 13. Trigonometry
 14. Random Number
 15. Temperature Conversion
-16. History (save and view past calculations)
-17. Remove calculations from history
+16. View History
+17. Remove History 
 18. Exit
 
 Your choice: """)
-        
+
         if choice == "1": 
             print("Result: ", add(ask_for_numbers()))
             pause()
@@ -193,7 +214,7 @@ Your choice: """)
         elif choice == "16":
             history()
             pause()
-        elif choice == "17":
+        elif choice == "17": 
             remove_calculations_from_history()
             pause()
         elif choice == "18":
