@@ -1,5 +1,6 @@
 # MY calculator 
 
+import math
 import random 
 
 history_list = []
@@ -111,8 +112,24 @@ def logarithm(numbers):
     return result
 
 def trigonometry(numbers): 
+    #sin x (funkar bara för sin x)
     x = numbers[0]
-    result = x - (x**3)/6 + (x**5)/120 
+    
+    x = x % (2*math.pi)
+    
+    result = 0 
+    sign = 1
+    
+    terms = int(input("How exact do you want the result to be? (the higher the number is rhe more exact the result will be, but it will take more time to calculate.)"))
+    
+    if terms <= 0: 
+        return "Error: terms must be positive."
+    
+    for n in range(terms):
+        power = 2*n + 1
+        result += sign * (x**power)/math.factorial(power)
+        sign *= -1 
+    
     history_list.append(f"Trigonometry: {numbers[0]} = {result}")  
     return result      
 
